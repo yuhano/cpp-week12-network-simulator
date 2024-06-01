@@ -20,6 +20,7 @@ private:
 
 public:
   ~MessageService() = default;
+  std::string name() override { return "MessageService"; };
 
   // 메시지를 전송한다
   void send(std::string message);

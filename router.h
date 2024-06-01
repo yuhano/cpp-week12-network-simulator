@@ -23,6 +23,8 @@ protected:
   std::vector<RoutingEntry> routingTable_;
 
 public:
+  std::string name() override { return "Router"; };
+
   // 발신
   void send(Packet *packet);
 

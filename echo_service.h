@@ -16,6 +16,7 @@ private:
 
 public:
   ~EchoService() = default;
+  std::string name() override { return "EchoService"; }
 
   void listener(Packet *packet);
 };

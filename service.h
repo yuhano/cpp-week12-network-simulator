@@ -2,11 +2,11 @@
 #define SERVICE_H
 
 #include "node.h"
+#include "object.h"
 
 class Host;
 
-class Service
-{
+class Service : Object {
   friend class ServiceInstaller;
 
 protected:
@@ -30,6 +30,9 @@ public:
 
   // 서비스 내에, host로부터 packet을 받는 함수
   virtual void listener(Packet *packet) = 0;
+
+  std::string name() override { return "Service"; };
+
 };
 
 #endif

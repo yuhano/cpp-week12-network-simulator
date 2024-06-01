@@ -17,6 +17,9 @@ private:
   // 설치된 서비스 목록
   std::vector<Service *> services_;
 
+  std::string name() override { return "Host"; };
+
+
 public:
   // host 소멸자 (Node와 Host을 삭제하기 위한)
   virtual ~Host() {

@@ -8,6 +8,8 @@ class ManualRouter : public Router
 {
 
 public:
+  std::string name() override { return "ManualRouter"; };
+
   virtual ~ManualRouter() {}
   
   // 목적지 주소에 따른 다음 링크를 설정한다.

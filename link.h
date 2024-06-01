@@ -1,13 +1,14 @@
 #ifndef LINK_H
 #define LINK_H
 
+#include "object.h"
 #include "packet.h"
 #include <cstdlib>
 #include <iostream>
 
 class Node;
 
-class Link
+class Link : Object
 {
   friend class LinkInstaller;
 
@@ -24,6 +25,8 @@ private:
   }
 
 public:
+  std::string name() override { return "Link"; };
+
   // Link의 데이터를 보내는 곳의 정보와 패킷 정보를 입력하면 반대편에 Packet을 전송
   void connect(const Node *node, Packet *packet) const;
 };

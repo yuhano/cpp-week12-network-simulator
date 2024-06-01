@@ -11,6 +11,9 @@ first.o: scenarios/first.cpp
 second.o: scenarios/second.cpp
 	$(CC) $(CFLAGS) -c scenarios/second.cpp -o second.o
 
+object.o: object.cpp
+	$(CC) $(CFLAGS) -c object.cpp -o object.o
+
 echo_service.o: echo_service.cpp
 	$(CC) $(CFLAGS) -c echo_service.cpp -o echo_service.o
 
@@ -45,11 +48,11 @@ node.o: node.cpp
 	$(CC) $(CFLAGS) -c node.cpp -o node.o
 
 # 실행 파일 생성 규칙
-first.exe: first.o echo_service.o echo_service_installer.o host.o link.o link_installer.o manual_router.o message_service.o message_service_installer.o router.o service_installer.o node.o
-	$(CC) $(CFLAGS) -o first.exe first.o echo_service.o echo_service_installer.o host.o link.o link_installer.o manual_router.o message_service.o message_service_installer.o router.o service_installer.o node.o
+first.exe: first.o object.o echo_service.o echo_service_installer.o host.o link.o link_installer.o manual_router.o message_service.o message_service_installer.o router.o service_installer.o node.o
+	$(CC) $(CFLAGS) -o first.exe first.o object.o echo_service.o echo_service_installer.o host.o link.o link_installer.o manual_router.o message_service.o message_service_installer.o router.o service_installer.o node.o
 
-second.exe: second.o echo_service.o echo_service_installer.o host.o link.o link_installer.o manual_router.o message_service.o message_service_installer.o router.o service_installer.o node.o
-	$(CC) $(CFLAGS) -o second.exe second.o echo_service.o echo_service_installer.o host.o link.o link_installer.o manual_router.o message_service.o message_service_installer.o router.o service_installer.o node.o
+second.exe: second.o object.o echo_service.o echo_service_installer.o host.o link.o link_installer.o manual_router.o message_service.o message_service_installer.o router.o service_installer.o node.o
+	$(CC) $(CFLAGS) -o second.exe second.o object.o echo_service.o echo_service_installer.o host.o link.o link_installer.o manual_router.o message_service.o message_service_installer.o router.o service_installer.o node.o
 
 # 청소 규칙
 clean:

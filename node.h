@@ -2,11 +2,11 @@
 #define NODE_H
 
 #include "link.h"
+#include "object.h"
 #include "packet.h"
 #include <vector>
 
-class Node
-{
+class Node : Object {
   friend class LinkInstaller;
 
 private:
@@ -18,6 +18,8 @@ protected:
   std::vector<Link *> accessableLink;
 
 public:
+  std::string name() override { return "Node"; };
+
   Node() : id_(nextId_++) {}
   int id() const { return id_; }
 

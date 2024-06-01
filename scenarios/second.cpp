@@ -1,3 +1,5 @@
+#define CHECK_MEMORY_LEAK
+
 #include "../echo_service.h"
 #include "../echo_service_installer.h"
 #include "../host.h"
@@ -85,4 +87,6 @@ int main() {
     delete serverLinks[i];
     delete clientLinks[i];
   }
+
+  Object::checkMemoryLeak();
 }
