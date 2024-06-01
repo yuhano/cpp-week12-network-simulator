@@ -49,4 +49,4 @@ second.exe: second.o echo_service.o echo_service_installer.o host.o link.o link_
 	$(CC) $(CFLAGS) -o second.exe second.o echo_service.o echo_service_installer.o host.o link.o link_installer.o manual_router.o message_service.o message_service_installer.o router.o service_installer.o node.o
 
 clean:
-	del /Q *.o first.exe second.exe
+	rm -f *.o first second
