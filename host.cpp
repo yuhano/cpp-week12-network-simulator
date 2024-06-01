@@ -50,5 +50,6 @@ void Host::receive(Packet *packet)
                   << ", to: " << packet->destAddress().toString()
                   << ", " << packet->data().size()
                   << " bytes)" << std::endl;
+        delete packet;
     }
 }
