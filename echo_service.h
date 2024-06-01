@@ -15,6 +15,8 @@ private:
   EchoService(Host *host, short port) : Service(host, port) {}
 
 public:
+  ~EchoService() = default;
+
   void listener(Packet *packet);
 };
 

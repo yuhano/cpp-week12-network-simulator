@@ -20,7 +20,7 @@ private:
 public:
   // host 소멸자 (Node와 Host을 삭제하기 위한)
   virtual ~Host() {
-    for (Service *i : services_){ delete i; }
+     for (Service *i : services_){ delete i; }
   }
   
   Address address() { return address_; }

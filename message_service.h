@@ -19,6 +19,8 @@ private:
       : Service(host, port), destAddress_(destAddress), destPort_(destPort) {}
 
 public:
+  ~MessageService() = default;
+
   // 메시지를 전송한다
   void send(std::string message);
 

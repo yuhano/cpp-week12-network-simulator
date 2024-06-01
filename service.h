@@ -21,7 +21,10 @@ protected:
 
   Service(Host *host, int port) : host_(host), port_(port) {}
 
+
 public:
+  virtual ~Service() = default;
+
   // 서비스가 사용하는 포트
   short port() { return port_; }
 
