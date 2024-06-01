@@ -6,7 +6,8 @@
 #include "service.h"
 #include <vector>
 
-class Host : public Node {
+class Host : public Node
+{
   friend class ServiceInstaller;
 
 private:
@@ -17,6 +18,8 @@ private:
   std::vector<Service *> services_;
 
 public:
+  // host 소멸자 (Node와 Host을 삭제하기 위한)
+  virtual ~Host() {}
   Address address() { return address_; }
   Host(Address address) : address_(address) {}
 
@@ -25,6 +28,9 @@ public:
 
   // 링크를 랜덤으로 하나 선택하여 패킷을 전송한다.
   void send(Packet *packet);
+
+  // 링크를 통해 상대 host로부터 패킷을 받는다.
+  void receive(Packet *packet);
 };
 
 #endif

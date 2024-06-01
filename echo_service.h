@@ -7,11 +7,15 @@
 #include <string>
 
 // 수신한 패킷을 전송자에게 다시 전송하는 서비스
-class EchoService : public Service {
+class EchoService : public Service
+{
   friend class EchoServiceInstaller;
 
 private:
   EchoService(Host *host, short port) : Service(host, port) {}
+
+public:
+  void listener(Packet *packet);
 };
 
 #endif
