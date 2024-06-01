@@ -6,7 +6,7 @@
 #include "packet.h"
 #include <vector>
 
-class Node : Object {
+class Node : public Object {
   friend class LinkInstaller;
 
 private:

@@ -3,11 +3,16 @@
 
 void Link::connect(const Node *node, Packet *packet) const
 {
-    if (node == nodeA_ || node == nodeB_)
-    {
-        // 다음 Node에 Packet 전달.
-        std::cout << "Link: forwarding packet from node #" << node->id()
-                  << ", to node #" << other(node)->id() << std::endl;
-        other(node)->receive(packet);
-    }
+    // 다음 Node에 Packet 전달.
+    std::string tmpMsg = "packet in: " + packet->toString() + " from " + const_cast<Node *>(other(node))->toString()+" ";
+    const_cast<Link *>(this)->log(tmpMsg);
+
+    Node *otherNode = other(node);
+    Simulator::schedule(delay_,
+                        [this, otherNode, packet]()
+                        {
+                            std::string tmpMsg = "packet out: " + packet->toString() + " to " + const_cast<Node *>(otherNode)->toString()+"";
+                            const_cast<Link *>(this)->log(tmpMsg);
+                            otherNode->receive(packet);
+                        });
 }

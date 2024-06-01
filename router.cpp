@@ -15,21 +15,16 @@ void Router::send(Packet *packet)
 
     if (sendLink) // 라우팅 테이블에 값이 있어 전송이 가능한 경우
     {
-        std::cout
-            << "Router #" << id()
-            << ": forwarding packet (from: " << packet->srcAddress().toString()
-            << ", to: " << packet->destAddress().toString()
-            << ", " << packet->data().size() << " bytes)" << std::endl;
+        std::string tmpMsg = "forwarding packet: " + packet->toString() + " to " + sendLink->toString();
+        log(tmpMsg);
 
         sendLink->connect(this, packet);
     }
     else // 라우팅 테이블에 값이 없어 전송이 불가능한 경우
     {
-        std::cout
-            << "Router #" << id()
-            << ": no route for packet (from: " << packet->srcAddress().toString()
-            << ", to: " << packet->destAddress().toString()
-            << ", " << packet->data().size() << " bytes)" << std::endl;
+
+        std::string tmpMsg = "no route for packet: "+packet->toString();
+        log(tmpMsg);
         delete packet;
     }
 }

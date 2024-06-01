@@ -12,8 +12,8 @@ void MessageService::send(std::string message)
 void MessageService::listener(Packet *packet)
 {
     // 메시지 수신 완료
-    std::cout << "MessageService: received \"" << packet->dataString()
-              << "\" from " << packet->srcAddress().toString()
-              << ":" << packet->srcPort() << std::endl;
+    std::string tmpMsg = "received \"" + packet->dataString() + "\" from " + packet->srcAddress().toString() + ":" + std::to_string(packet->srcPort());
+    log(tmpMsg);
+
     delete packet;
 }

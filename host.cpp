@@ -9,10 +9,7 @@ void Host::initialize()
 void Host::send(Packet *packet)
 {
     // 발신 시작 메시지
-    std::cout << "Host #" << id()
-              << ": sending packet (from: " << packet->srcAddress().toString()
-              << ", to: " << packet->destAddress().toString()
-              << ", " << packet->dataString().length() << " bytes)" << std::endl;
+    log("sending packet: " + packet->toString());
 
     // 패킷 보내기
     // host에 연결된 link가 없으면 연결 시도하지 않음.
@@ -36,20 +33,18 @@ void Host::receive(Packet *packet)
         }
     }
 
-    
     if (packetToService) // packet 도착 포트를 사용하는 서비스가 있는 경우
     {
-        std::cout << "Host #" << id()
-                  << ": received packet, destination port: " << packet->destPort() << std::endl;
+        std::string tmpMsg = "received packet: " + packet->toString() + ", forwarding to " + packetToService->toString();
+        log(tmpMsg);
+
         packetToService->listener(packet);
     }
     else // 없는 경우
     {
-        std::cout << "Host #" << id()
-                  << ": no service for packet (from: " << packet->srcAddress().toString()
-                  << ", to: " << packet->destAddress().toString()
-                  << ", " << packet->data().size()
-                  << " bytes)" << std::endl;
+        std::string tmpMsg = "no service for packet: " + packet->toString();
+        log(tmpMsg);
+        
         delete packet;
     }
 }

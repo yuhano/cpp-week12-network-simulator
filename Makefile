@@ -47,16 +47,20 @@ service_installer.o: service_installer.cpp
 node.o: node.cpp
 	$(CC) $(CFLAGS) -c node.cpp -o node.o
 
-# 실행 파일 생성 규칙
-first.exe: first.o object.o echo_service.o echo_service_installer.o host.o link.o link_installer.o manual_router.o message_service.o message_service_installer.o router.o service_installer.o node.o
-	$(CC) $(CFLAGS) -o first.exe first.o object.o echo_service.o echo_service_installer.o host.o link.o link_installer.o manual_router.o message_service.o message_service_installer.o router.o service_installer.o node.o
+simulator.o: simulator.cpp
+	$(CC) $(CFLAGS) -c simulator.cpp -o simulator.o
 
-second.exe: second.o object.o echo_service.o echo_service_installer.o host.o link.o link_installer.o manual_router.o message_service.o message_service_installer.o router.o service_installer.o node.o
-	$(CC) $(CFLAGS) -o second.exe second.o object.o echo_service.o echo_service_installer.o host.o link.o link_installer.o manual_router.o message_service.o message_service_installer.o router.o service_installer.o node.o
+# 실행 파일 생성 규칙
+first.exe: first.o object.o echo_service.o echo_service_installer.o host.o link.o link_installer.o manual_router.o message_service.o message_service_installer.o router.o service_installer.o node.o simulator.o
+	$(CC) $(CFLAGS) -o first.exe first.o object.o echo_service.o echo_service_installer.o host.o link.o link_installer.o manual_router.o message_service.o message_service_installer.o router.o service_installer.o node.o simulator.o
+
+second.exe: second.o object.o echo_service.o echo_service_installer.o host.o link.o link_installer.o manual_router.o message_service.o message_service_installer.o router.o service_installer.o node.o simulator.o
+	$(CC) $(CFLAGS) -o second.exe second.o object.o echo_service.o echo_service_installer.o host.o link.o link_installer.o manual_router.o message_service.o message_service_installer.o router.o service_installer.o node.o simulator.o
 
 # 청소 규칙
+# rm -f *.o first.exe second.exe
 clean:
-	rm -f *.o first.exe second.exe
+	del /F *.o first.exe second.exe
 
 # 기본 목표 설정
 .PHONY: all clean first second

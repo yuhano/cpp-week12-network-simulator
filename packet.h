@@ -6,7 +6,7 @@
 #include <string>
 #include <vector>
 
-class Packet : Object {
+class Packet : public Object {
 public:
   std::string name() override { return "Packet"; };
 
