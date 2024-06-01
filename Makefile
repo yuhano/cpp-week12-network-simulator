@@ -1,8 +1,10 @@
 CC = g++
 CFLAGS = -g -Wall -Werror -std=c++11
 
+# 기본 목표
 all: first.exe second.exe
 
+# 오브젝트 파일 생성 규칙
 first.o: scenarios/first.cpp
 	$(CC) $(CFLAGS) -c scenarios/first.cpp -o first.o
 
@@ -42,11 +44,22 @@ service_installer.o: service_installer.cpp
 node.o: node.cpp
 	$(CC) $(CFLAGS) -c node.cpp -o node.o
 
+# 실행 파일 생성 규칙
 first.exe: first.o echo_service.o echo_service_installer.o host.o link.o link_installer.o manual_router.o message_service.o message_service_installer.o router.o service_installer.o node.o
 	$(CC) $(CFLAGS) -o first.exe first.o echo_service.o echo_service_installer.o host.o link.o link_installer.o manual_router.o message_service.o message_service_installer.o router.o service_installer.o node.o
 
 second.exe: second.o echo_service.o echo_service_installer.o host.o link.o link_installer.o manual_router.o message_service.o message_service_installer.o router.o service_installer.o node.o
 	$(CC) $(CFLAGS) -o second.exe second.o echo_service.o echo_service_installer.o host.o link.o link_installer.o manual_router.o message_service.o message_service_installer.o router.o service_installer.o node.o
 
+# 청소 규칙
 clean:
-	rm -f *.o first second
+	rm -f *.o first.exe second.exe
+
+# 기본 목표 설정
+.PHONY: all clean first second
+
+# first 목표를 first.exe로 매핑
+first: first.exe
+
+# second 목표를 second.exe로 매핑
+second: second.exe
