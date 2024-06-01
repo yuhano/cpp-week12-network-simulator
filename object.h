@@ -1,7 +1,7 @@
 #ifndef OBJECT_H
 #define OBJECT_H
 
-// #include "simulator.h"
+#include "simulator.h"
 #include <iomanip>
 #include <ios>
 #include <iostream>
@@ -68,7 +68,7 @@ protected:
     std::ostringstream oss;
     oss.setf(std::ios::fixed);
     oss.precision(2);
-    // oss << Simulator::now() << "s";
+    oss << Simulator::now() << "s";
     std::cout << std::setw(10) << std::left << oss.str() << std::setw(30)
               << std::left << toString() << " " << message << std::endl;
   }
