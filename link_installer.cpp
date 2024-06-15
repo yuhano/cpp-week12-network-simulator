@@ -4,7 +4,7 @@
 Link *LinkInstaller::install(Node *a, Node *b, double delay)
 {
     // 새로운 링크 생성 및 각 Node의 연결 링크에 저장
-    Link *newLink = new Link(a,b);
+    Link *newLink = new Link(a,b, delay);
     a->accessableLink.push_back(newLink);
     b->accessableLink.push_back(newLink);
 

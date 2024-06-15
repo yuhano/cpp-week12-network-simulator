@@ -33,7 +33,8 @@ public:
     return node == nodeA_ ? nodeB_ : nodeA_;
   }
 
-public:
+  double getDelay() { return delay_; }
+  
   std::string name() override { return "Link"; };
 
   // Link의 데이터를 보내는 곳의 정보와 패킷 정보를 입력하면 반대편에 Packet을 전송
