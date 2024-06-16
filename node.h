@@ -6,7 +6,8 @@
 #include "packet.h"
 #include <vector>
 
-class Node : public Object {
+class Node : public Object
+{
   friend class LinkInstaller;
 
 private:
@@ -28,6 +29,11 @@ public:
 
   // 수신
   virtual void receive(Packet *packet) = 0;
+  // accessableLink에 접근할 수 있는 공용 접근자
+  const std::vector<Link *> &getAccessableLink() const
+  {
+    return accessableLink;
+  }
 };
 
 #endif

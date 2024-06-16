@@ -11,36 +11,86 @@
 #include <queue>
 #include <set>
 #include <vector>
-#include <iostream>
-
+#include <unordered_map>
+#include <unordered_set>
 class AutoRouter : public Router
 {
 public:
-  void calculate(const std::vector<Node *> &nodes,
-                 const std::vector<Link *> &links)
-  {
-    // 전체 노드와 링크 정보를 통해
-    // 모든 호스트로 전달될 수 있는 라우팅 테이블을 구성한다
-    // TODO: 구현
-    auto newDijkstraTable = generateDijkstraTable(nodes, links);
+    std::string name() override { return "AutoRouter"; };
+    void calculate(const std::vector<Node *> &nodes,
+                   const std::vector<Link *> &links)
+    {
+        // 각 노드에 대한 라우팅 테이블을 초기화합니다.
+        routingTable_.clear();
 
-    int thisIndex = findNode(nodes, this);
+        // 모든 호스트 노드에 대해 루프를 돌며 라우팅 테이블을 계산합니다.
+        for (Node *node : nodes)
+        {
+            if (Host *host = dynamic_cast<Host *>(node))
+            {
+                Address destination = host->address();
+                std::unordered_map<Node *, double> minDistance;
+                std::unordered_map<Node *, Link *> previousLink;
 
-    distances = runDijkstra(newDijkstraTable, thisIndex);
-  }
+                // 모든 노드의 거리를 무한대로 초기화합니다.
+                for (Node *n : nodes)
+                {
+                    minDistance[n] = std::numeric_limits<double>::infinity();
+                }
 
-private:
-  // DijkstraTable 계산 결과
-  std::vector<double> distances;
+                // 시작 노드의 거리를 0으로 설정합니다.
+                minDistance[this] = 0;
 
-  // 특정 포인터 값을 배열에서 찾는 함수
-  int findNode(const std::vector<Node *> &nodes, Node *target);
+                // 우선순위 큐를 사용하여 최단 거리 노드를 찾습니다.
+                using NodeDistPair = std::pair<double, Node *>;
+                std::priority_queue<NodeDistPair, std::vector<NodeDistPair>, std::greater<NodeDistPair>> pq;
+                pq.push({0, this});
 
-  // DijkstraTable 생성 함수
-  std::vector<std::vector<double>> generateDijkstraTable(const std::vector<Node *> &nodes, const std::vector<Link *> &links);
+                while (!pq.empty())
+                {
+                    double currentDist = pq.top().first;
+                    Node *currentNode = pq.top().second;
+                    pq.pop();
 
-  // Dijkstra 거리 계산 결과 함수
-  std::vector<double> AutoRouter::runDijkstra(const std::vector<std::vector<double>> &tableCost, int startNode);
+                    if (currentDist > minDistance[currentNode])
+                    {
+                        continue;
+                    }
+
+                    // 현재 노드에서 연결된 링크를 통해 이웃 노드로 이동합니다.
+                    for (Link *link : currentNode->getAccessableLink())
+                    {
+                        Node *neighbor = link->other(currentNode);
+                        double newDist = currentDist + link->getDelay();
+
+                        if (newDist < minDistance[neighbor])
+                        {
+                            minDistance[neighbor] = newDist;
+                            previousLink[neighbor] = link;
+                            pq.push({newDist, neighbor});
+                        }
+                    }
+                }
+
+                // 목적지 호스트까지의 경로를 라우팅 테이블에 추가합니다.
+                if (previousLink.find(host) != previousLink.end())
+                {
+                    Link *nextLink = previousLink[host];
+                    Node *prevNode = host;
+
+                    // 목적지 호스트로 가는 경로 중 첫 번째 링크를 찾습니다.
+                    while (previousLink.find(prevNode) != previousLink.end() && previousLink[prevNode] != nullptr)
+                    {
+                        nextLink = previousLink[prevNode];
+                        prevNode = nextLink->other(prevNode);
+                    }
+
+                    // 라우팅 엔트리를 라우팅 테이블에 추가합니다.
+                    routingTable_.emplace_back(destination, nextLink);
+                }
+            }
+        }
+    }
 };
 
 #endif

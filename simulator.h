@@ -21,11 +21,8 @@ private:
 
 public:
   double time() { return time_; }
-  // std::string object() { return objectStr_; }
   void call() { function_(); }
 
-  // Schedule(double time, std::function<void()> function, std::string objectStr)
-  //     : time_(time), function_(function), objectStr_(objectStr) {}
   Schedule(double time, std::function<void()> function)
       : time_(time), function_(function) {}
 };
@@ -48,7 +45,6 @@ public:
   static void schedule(double time, std::function<void()> function)
   {
     // 스케줄 큐에 스케줄을 추가한다.
-    // scheduleQueue.push(Schedule(now() + time, function, objectStr));
     scheduleQueue.push(Schedule(now() + time, function));
     // 동일한 함수
     // scheduleQueue.emplace(time ,function);
@@ -59,13 +55,16 @@ public:
     // 모든 스케줄을 실행한다.
     while (!scheduleQueue.empty())
     {
-      time_ = double((clock() - start) / (double)CLOCKS_PER_SEC);
       Schedule &topSchedule = const_cast<Schedule &>(scheduleQueue.top());
 
       if (topSchedule.time() <= now())
       {
         topSchedule.call();
         scheduleQueue.pop();
+      }
+      else
+      {
+        time_ += 0.001;
       }
     }
   }

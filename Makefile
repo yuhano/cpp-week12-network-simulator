@@ -2,7 +2,7 @@ CC = g++
 CFLAGS = -g -Wall -Werror -std=c++11
 
 # 기본 목표
-all: first.exe second.exe
+all: first.exe second.exe third.exe forth.exe
 
 # 오브젝트 파일 생성 규칙
 first.o: scenarios/first.cpp
@@ -10,6 +10,12 @@ first.o: scenarios/first.cpp
 
 second.o: scenarios/second.cpp
 	$(CC) $(CFLAGS) -c scenarios/second.cpp -o second.o
+
+third.o: scenarios/third.cpp
+	$(CC) $(CFLAGS) -c scenarios/third.cpp -o third.o
+
+forth.o: scenarios/forth.cpp
+	$(CC) $(CFLAGS) -c scenarios/forth.cpp -o forth.o
 
 object.o: object.cpp
 	$(CC) $(CFLAGS) -c object.cpp -o object.o
@@ -50,23 +56,47 @@ node.o: node.cpp
 simulator.o: simulator.cpp
 	$(CC) $(CFLAGS) -c simulator.cpp -o simulator.o
 
-# 실행 파일 생성 규칙
-first.exe: first.o object.o echo_service.o echo_service_installer.o host.o link.o link_installer.o manual_router.o message_service.o message_service_installer.o router.o service_installer.o node.o simulator.o
-	$(CC) $(CFLAGS) -o first.exe first.o object.o echo_service.o echo_service_installer.o host.o link.o link_installer.o manual_router.o message_service.o message_service_installer.o router.o service_installer.o node.o simulator.o
+bulk_send_service.o: bulk_send_service.cpp
+	$(CC) $(CFLAGS) -c bulk_send_service.cpp -o bulk_send_service.o
 
-second.exe: second.o object.o echo_service.o echo_service_installer.o host.o link.o link_installer.o manual_router.o message_service.o message_service_installer.o router.o service_installer.o node.o simulator.o
-	$(CC) $(CFLAGS) -o second.exe second.o object.o echo_service.o echo_service_installer.o host.o link.o link_installer.o manual_router.o message_service.o message_service_installer.o router.o service_installer.o node.o simulator.o
+bulk_send_service_installer.o: bulk_send_service_installer.cpp
+	$(CC) $(CFLAGS) -c bulk_send_service_installer.cpp -o bulk_send_service_installer.o
+
+# auto_router.o: auto_router.cpp
+# 	$(CC) $(CFLAGS) -c auto_router.cpp -o auto_router.o
+
+# ------------- linking ------------------
+OBJ = object.o echo_service.o echo_service_installer.o host.o link.o link_installer.o manual_router.o message_service.o message_service_installer.o router.o service_installer.o node.o simulator.o bulk_send_service.o bulk_send_service_installer.o 
+
+# 실행 파일 생성 규칙
+first.exe: first.o $(OBJ)
+	$(CC) $(CFLAGS) -o first.exe first.o $(OBJ)
+
+second.exe: second.o $(OBJ)
+	$(CC) $(CFLAGS) -o second.exe second.o $(OBJ)
+
+third.exe: third.o $(OBJ)
+	$(CC) $(CFLAGS) -o third.exe third.o $(OBJ)
+
+forth.exe: forth.o $(OBJ)
+	$(CC) $(CFLAGS) -o forth.exe forth.o $(OBJ)
 
 # 청소 규칙
 # rm -f *.o first.exe second.exe
 clean:
-	del /F *.o first.exe second.exe
+	del /F *.o first.exe second.exe third.exe forth.exe
 
 # 기본 목표 설정
-.PHONY: all clean first second
+.PHONY: all clean first second third forth
 
 # first 목표를 first.exe로 매핑
 first: first.exe
 
 # second 목표를 second.exe로 매핑
 second: second.exe
+
+# third 목표를 third.exe로 매핑
+third: third.exe
+
+# forth 목표를 forth.exe로 매핑
+forth: forth.exe
