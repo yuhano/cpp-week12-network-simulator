@@ -9,6 +9,7 @@
 #include <iostream>
 #include <ctime>
 #include <vector>
+#include "object.h"
 
 class Simulator;
 
@@ -50,24 +51,7 @@ public:
     // scheduleQueue.emplace(time ,function);
   }
 
-  static void run()
-  {
-    // 모든 스케줄을 실행한다.
-    while (!scheduleQueue.empty())
-    {
-      Schedule &topSchedule = const_cast<Schedule &>(scheduleQueue.top());
-
-      if (topSchedule.time() <= now())
-      {
-        topSchedule.call();
-        scheduleQueue.pop();
-      }
-      else
-      {
-        time_ += 0.001;
-      }
-    }
-  }
+  static void run();
 };
 
 #endif
