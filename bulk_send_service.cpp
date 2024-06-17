@@ -13,7 +13,7 @@ void BulkSendService::listener(Packet *packet)
 void BulkSendService::send()
 {
 
-    if (Simulator::now() > stopTime_)
+    if (Simulator::now() >= stopTime_)
     {
         return;
     }
@@ -24,8 +24,7 @@ void BulkSendService::send()
     host_->send(sendPacket_);
 
     // bulk send의 단독적인 delay 설정을 위하여
-    nowTime_ = nowTime_ + delay_;
     Simulator::schedule(
-        nowTime_ - Simulator::now(), [this]()
+        delay_, [this]()
         { this->send(); });
 }
