@@ -9,6 +9,7 @@ private:
   std::string address_;
 
 public:
+  Address(const char* address) : address_(address) {}
   Address(const std::string &address) : address_(address) {}
   Address(int address) : address_(std::to_string(address)) {}
   std::string toString() const { return address_; }

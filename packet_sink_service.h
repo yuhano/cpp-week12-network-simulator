@@ -14,6 +14,7 @@ private:
   int totalPacketSize_ = 0;
 
 public:
+  ~PacketSinkService() = default;
   void listener(Packet *packet)
   {
     // 메시지 데이터 크기 더하기

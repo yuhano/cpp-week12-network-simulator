@@ -19,13 +19,20 @@ private:
 
   std::string name() override { return "Host"; };
 
-
 public:
   // host 소멸자 (Node와 Host을 삭제하기 위한)
-  virtual ~Host() {
-     for (Service *i : services_){ delete i; }
+  ~Host()
+  {
+    for (auto &i : services_)
+    {
+      if (i != nullptr)
+      {
+        delete i;
+        i = nullptr;
+      }
+    }
   }
-  
+
   Address address() { return address_; }
   Host(Address address) : address_(address) {}
 

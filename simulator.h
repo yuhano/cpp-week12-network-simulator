@@ -9,7 +9,6 @@
 #include <iostream>
 #include <ctime>
 #include <vector>
-#include "object.h"
 
 class Simulator;
 
