@@ -2,7 +2,7 @@ CC = g++
 CFLAGS = -g -Wall -Werror -std=c++11
 
 # 기본 목표
-all: first.exe second.exe third.exe forth.exe
+all: first.exe second.exe third.exe forth.exe fifth.exe sixth.exe
 
 # 오브젝트 파일 생성 규칙
 first.o: scenarios/first.cpp
@@ -16,6 +16,12 @@ third.o: scenarios/third.cpp
 
 forth.o: scenarios/forth.cpp
 	$(CC) $(CFLAGS) -c scenarios/forth.cpp -o forth.o
+
+fifth.o: scenarios/fifth.cpp
+	$(CC) $(CFLAGS) -c scenarios/fifth.cpp -o fifth.o
+
+sixth.o: scenarios/sixth.cpp
+	$(CC) $(CFLAGS) -c scenarios/sixth.cpp -o sixth.o
 
 object.o: object.cpp
 	$(CC) $(CFLAGS) -c object.cpp -o object.o
@@ -81,10 +87,18 @@ third.exe: third.o $(OBJ)
 forth.exe: forth.o $(OBJ)
 	$(CC) $(CFLAGS) -o forth.exe forth.o $(OBJ)
 
+fifth.exe: fifth.o $(OBJ)
+	$(CC) $(CFLAGS) -o fifth.exe fifth.o $(OBJ)
+
+sixth.exe: sixth.o $(OBJ)
+	$(CC) $(CFLAGS) -o sixth.exe sixth.o $(OBJ)
+
 # 청소 규칙
 # rm -f *.o first.exe second.exe
 clean:
-	del /F *.o first.exe second.exe third.exe forth.exe
+	del /F *.o first.exe second.exe third.exe forth.exe fifth.exe sixth.exe
+
+
 
 # 기본 목표 설정
 .PHONY: all clean first second third forth
@@ -100,3 +114,9 @@ third: third.exe
 
 # forth 목표를 forth.exe로 매핑
 forth: forth.exe
+
+# fifth 목표를 fifth.exe로 매핑
+fifth: fifth.exe
+
+# sixth 목표를 sixth.exe로 매핑
+sixth: sixth.exe

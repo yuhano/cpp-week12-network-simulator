@@ -26,7 +26,7 @@ void Host::receive(Packet *packet)
     Service *packetToService = nullptr;
     for (Service *i : services_)
     {
-        if (i->port() == packet->destPort() || i->port() == packet->srcPort())
+        if (i->port() == packet->destPort() || i->port() == packet->srcPort() || i->srcPort() == packet -> destPort() || i -> srcPort() == packet -> srcPort())
         {
             packetToService = i;
             break;

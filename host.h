@@ -21,17 +21,7 @@ private:
 
 public:
   // host 소멸자 (Node와 Host을 삭제하기 위한)
-  ~Host()
-  {
-    for (auto &i : services_)
-    {
-      if (i != nullptr)
-      {
-        delete i;
-        i = nullptr;
-      }
-    }
-  }
+  ~Host() { }
 
   Address address() { return address_; }
   Host(Address address) : address_(address) {}

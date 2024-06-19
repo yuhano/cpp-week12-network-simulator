@@ -2,10 +2,6 @@
 
 void BulkSendService::listener(Packet *packet)
 {
-    // 수신 성공 메시지
-    std::string tmpMsg = "received \"" + packet->dataString() + "\" from " + packet->srcAddress().toString() + ":" + std::to_string(packet->srcPort()) + ", send reply with same data";
-    log(tmpMsg);
-
     // 기존 패킷 삭제
     delete packet;
 }
@@ -13,7 +9,7 @@ void BulkSendService::listener(Packet *packet)
 void BulkSendService::send()
 {
 
-    if (Simulator::now() > stopTime_)
+    if (Simulator::now() >= stopTime_)
     {
         return;
     }

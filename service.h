@@ -27,6 +27,7 @@ public:
 
   // 서비스가 사용하는 포트
   short port() { return port_; }
+  short srcPort() { return srcPort_; }
 
   // 서비스 내에, host로부터 packet을 받는 함수
   virtual void listener(Packet *packet) = 0;
