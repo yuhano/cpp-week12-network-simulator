@@ -57,15 +57,9 @@ public:
     {
       Schedule &topSchedule = const_cast<Schedule &>(scheduleQueue.top());
 
-      if (topSchedule.time() == now())
-      {
-        topSchedule.call();
-        scheduleQueue.pop();
-      }
-      else
-      {
-        time_ = topSchedule.time();
-      }
+      time_ = topSchedule.time();
+      topSchedule.call();
+      scheduleQueue.pop();
     }
   }
 };
